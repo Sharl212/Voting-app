@@ -1,0 +1,25 @@
+form {
+  transform: translateX(50%);
+}
+
+input{
+  text-align: center;
+}
+
+.header{
+  text-align:center;  
+  font-size:35px;
+  cursor: pointer;
+}
+
+.form-check-label{
+  font-size:18px;
+  cursor: pointer;
+}
+
+#polls_list{
+  font-size:24px;
+  text-align: center;
+  margin-top:5%;
+}
+
