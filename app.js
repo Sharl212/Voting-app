@@ -27,7 +27,7 @@ mongoose.connect("mongodb://votingapp:123123@ds233500.mlab.com:33500/voting-app"
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, './client/build'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -36,7 +36,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 app.use('/', index);
 app.use('/users', users);
