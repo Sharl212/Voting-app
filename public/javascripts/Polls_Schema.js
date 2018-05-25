@@ -1,20 +1,34 @@
 const mongoose = require('mongoose');
 
 
-const Poll_Schema = new mongoose.Schema({
+let Poll_Schema = new mongoose.Schema({
     _creator: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: mongoose.Schema.Types.ObjectId
     },
-    poll:[{
-        option1:{
-            type:String,
-            maxlength:9
+    poll: [{
+        option1: {
+            type: String,
+            maxlength: 20,
+            minlength: 3
         },
-        option2:{
-            type:String,
-            maxlength:9
+        voteCounterOpt1: {
+            type: Number,
+            minlength: 1,
+            maxlength: 2,
+            default: 0
+        },
+        option2: {
+            type: String,
+            maxlength: 20,
+            minlength: 3
+        },
+        voteCounterOpt2: {
+            type: Number,
+            minlength: 1,
+            maxlength: 2,
+            default: 0
         }
+        
     }]
 });
 
@@ -24,13 +38,14 @@ Poll_Schema.methods.toJSON = function () {
     return PollsObject;
 };
 
-Poll_Schema.methods.AddNewPoll = function(option1,option2){
+Poll_Schema.methods.AddNewPoll = function (option1, option2) {
     return this.update({
-        $set:{
-            poll:{option1, option2}
+        $set: {
+            poll: { option1, option2 }
         }
-    })
-}
+    });
+};
+
 const Poll_Schema_Model = mongoose.model("polls", Poll_Schema);
 
 

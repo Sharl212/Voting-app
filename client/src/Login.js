@@ -2,30 +2,29 @@ import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { login } from './javascripts/register&login';
-import { pollsRequest } from './javascripts/polls_request';
 
 class Login extends Component {
     render() {
         return (
             <Fragment>
                 <div className='container'>
-                    <form className='login col-6' onSubmit={login}>
-                        <label for="exampleInputEmail1" className='col-12 header'>Login</label>
+                    <form className='login col-6 createPollForm' onSubmit={login}>
+                        <label htmlFor="exampleInputEmail1" className='col-12 header'>Sign in</label>
                         <hr />
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Username</label>
-                            <input name="text" className="form-control" id="exampleInputUsername2" aria-describedby="emailHelp" placeholder="Enter username" />
+                            <label htmlFor="exampleInputEmail1" className='label col-12'>Username</label>
+                            <input name="text" className="form-control" id="exampleInputUsername2" aria-describedby="emailHelp" placeholder="Enter username"  required/>
                         </div>
                         <div className="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input name="password" type="password" className="form-control" id="exampleInputPassword2" placeholder="Password" />
+                            <label htmlFor="exampleInputPassword1" className='label col-12'>Password</label>
+                            <input name="password" type="password" className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
                         </div>
-                        <div className="form-group form-check">
+                        <div className="form-group form-check col-12">
                             <NavLink to='/register'>
-                                <label className="form-check-label" for="exampleCheck2">Create an account for FREE!</label>
+                                <label className="form-check-label col-12" htmlFor="exampleCheck2">Not a member yet? Create a new account!</label>
                             </NavLink>
                         </div>
-                        <button type="submit" className="btn btn-success">Login</button>
+                        <button type="submit" className="btn btn-success col-12">Login</button>
                     </form>
                 </div>
             </Fragment >

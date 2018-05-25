@@ -17,16 +17,17 @@ var users = require('./routes/users');
 
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/Voting-App", (err, db) => {
+// "mongodb://admin:budgetcalculator22@ds237669.mlab.com:37669/budgetcalculator"
+mongoose.connect("mongodb://votingapp:123123@ds233500.mlab.com:33500/voting-app", (err, db) => {
   if (err) {
     return console.log(err);
   }
 
-  console.log("Connected to MongoDB database..");
+  console.log("Connected to MongoDB database on mLab servers..");
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, './client/build'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
-app.post("/register", (req, res) => {
+app.post("/register", (req, res) => { // register with username, password
   const newAccount = new SchemaModel({
     username: req.body.username,
     password: req.body.password
@@ -54,7 +55,7 @@ app.post("/register", (req, res) => {
 });
 
 
-app.post("/login", (req, res) => {
+app.post("/login", (req, res) => { // login , generate authentication token
   SchemaModel.findByCredentials(req.body.username, req.body.password).then(function (user) {
     return user.generateAuthToken().then(function (token) {
       res.cookie("authorizationToken", token).send(user);
@@ -64,7 +65,7 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.post("/polls", authenticate, (req, res) => {
+app.post("/polls", authenticate, (req, res) => { // create a new poll
   const newPoll = new Poll_Schema_Model({
     _creator: req.user._id,
     option1: req.body.option1,
@@ -80,7 +81,7 @@ app.post("/polls", authenticate, (req, res) => {
   });
 });
 
-app.get("/mypolls", (req, res) => {
+app.get("/mypolls", (req, res) => { // fetch stored polls
   Poll_Schema_Model.find({}).then((polls) => {
     res.status(200).send(polls);
   }).catch((e) => {
@@ -88,6 +89,49 @@ app.get("/mypolls", (req, res) => {
   });
 });
 
+app.patch('/voting/:id', (req, res) => {
+  let id = req.params.id;
+  const newVote = 1;
+  let selectedOption = req.body.selectedOption;
+
+  Poll_Schema_Model.findById(id).then((res) => { // get the old note votes
+    let oldVoteOpt1 = res.poll[0].voteCounterOpt1;
+    let oldVoteOpt2 = res.poll[0].voteCounterOpt2;
+    let assignVote = increaseVotes(selectedOption, newVote, oldVoteOpt1, oldVoteOpt2); // addition both old and new votes;
+
+    Update(assignVote, selectedOption);
+    console.log('old vote counter', oldVoteOpt1, oldVoteOpt2);
+    console.log(selectedOption);
+    // console.log('NEW vote counter' , );
+  }).catch((e) => res.status(400).send());
+
+  function increaseVotes(selectedOption, newVote, oldVoteOpt1, oldVoteOpt2) {
+    let addition;
+    if (selectedOption === "option1") {
+      return addition = oldVoteOpt1 + newVote;
+    }
+    else if(selectedOption === "option2"){
+      return addition = oldVoteOpt2 + newVote;
+    }
+  }
+
+  function Update(assignVote, selectedOption) {
+    console.log(selectedOption);
+    if (selectedOption === "option1") {
+      Poll_Schema_Model.findByIdAndUpdate(id, { $set: { "poll.voteCounterOpt1": assignVote } }, { new: true }, (err, newPoll) => {
+        res.status(200).send(newPoll);
+      }).catch(() => {
+        res.status(403).send();
+      });
+    } else if (selectedOption === "option2") {
+      Poll_Schema_Model.findByIdAndUpdate(id, { $set: { "poll.voteCounterOpt2": assignVote } }, { new: true }, (err, newPoll) => {
+        res.status(200).send(newPoll);
+      }).catch(() => {
+        res.status(403).send();
+      });
+    };
+  };
+});
 
 app.listen(3000, () => console.log('server is running on 3000..'));
 

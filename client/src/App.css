@@ -1,5 +1,33 @@
-form {
+*{
+  color:white;
+}
+
+body{
+  background-color:#365abe;
+}
+.bg-light{
+  background-color:#283e99 !important;
+}
+.nav-link{
+  color:white !important;
+  text-align:center;
+  font-size:18px;
+}
+.navbar-toggler{
+  background-color:white !important;
+}
+.navbar-brand{
+  color:white !important;
+  font-size:2 0px;
+  font-weight:bold;
+}
+.createPollForm {
   transform: translateX(50%);
+  margin-top:10%;
+}
+
+.list-group-item{
+  color:black;
 }
 
 input{
@@ -12,9 +40,12 @@ input{
   cursor: pointer;
 }
 
-.form-check-label{
+.form-check-label,
+.label{
   font-size:18px;
   cursor: pointer;
+  text-align:center;
+  margin-top:10px;
 }
 
 #polls_list{
@@ -22,4 +53,17 @@ input{
   text-align: center;
   margin-top:5%;
 }
+.custom-select{
+  text-align:center;
+  font-size:24px !important;
+  overflow:hidden;
+  padding-top:50px;
+}
 
+.createAnewPoll{
+  text-align:center;
+}
+
+.vote{
+  font-size:30px !important;
+}
