@@ -131,10 +131,10 @@ class PollsList extends Component {
                                 <Fragment>
                                     <br/>
                                     <select className="custom-select list" size="2">
-                                        <option className="list-group-item col-6" name='option1' value='option1' onClick={this.change}>
+                                        <option className="list-group-item" name='option1' value='option1' onClick={this.change}>
                                             {polls.poll[0].option1} {polls.poll[0].voteCounterOpt1}
                                         </option>
-                                        <option className="list-group-item col-6" name='option2' value='option2' onClick={this.change}>
+                                        <option className="list-group-item" name='option2' value='option2' onClick={this.change}>
                                             {polls.poll[0].option2} {polls.poll[0].voteCounterOpt2}
                                         </option>
                                     </select>
